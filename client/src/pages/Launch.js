@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useMemo } from "react";
 import { Appear, Button, Loading, Paragraph } from "arwes";
 import Clickable from "../components/Clickable";
@@ -8,6 +9,12 @@ const Launch = props => {
       <option value={planet.kepler_name} key={planet.kepler_name}>{planet.kepler_name}</option>
     );
   }, [props.planets]);
+
+  // return props.planets.planets?.map((planet) => (
+  //     <option value={planet.kepler_name} key={planet.kepler_name}>
+  //       {planet.kepler_name}
+  //     </option>
+  //   ));
 
   const today = new Date().toISOString().split("T")[0];
 
