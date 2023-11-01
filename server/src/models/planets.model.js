@@ -3,7 +3,7 @@ const path = require("path");
 const { parse } = require("csv-parse");
 
 const habitablePlanets = [];
-
+ 
 function loadPlanets() {
   return new Promise((resolve, reject) => {
     function isHabitablePlanet(planet) {

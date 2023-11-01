@@ -1,0 +1,24 @@
+{
+  "name": "nasa-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm start --prefix Server",
+    "client": "npm start --prefix client",
+    "start": "npm run server & npm run client",
+    "deploy": "npm run build --prefix client && npm start --prefix Server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlaaHamdyMohammadi/NASA-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlaaHamdyMohammadi/NASA-Project/issues"
+  },
+  "homepage": "https://github.com/AlaaHamdyMohammadi/NASA-Project#readme"
+}
