@@ -1,4 +1,4 @@
-import axios from 'axios'
+//import axios from 'axios'
 
 const API_URL = "http://localhost:5000";
 
@@ -14,6 +14,11 @@ async function httpGetPlanets() {
 async function httpGetLaunches() {
   // TODO: Once API is ready.
   // Load launches, sort by flight number, and return as JSON.
+  const res = await fetch(`${API_URL}/launches`);
+  const fetchedLaunches = await res.json();
+  return fetchedLaunches.sort((a, b) => {
+    return a.flightNumber - b.flightNumber;
+  })
 }
 
 async function httpSubmitLaunch(launch) {
