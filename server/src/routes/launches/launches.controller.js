@@ -10,9 +10,9 @@ exports.httpPostAddNewLaunch = (req, res) => {
     !launch.mission ||
     !launch.rocket ||
     !launch.launchDate ||
-    !launch.destination
+    !launch.target
   ) {
-    return res.status(400).json({status: 'Faild launch'})
+    return res.status(400).json({ status: "Faild launch" });
   } 
   launch.launchDate = new Date(launch.launchDate);
   if (isNaN(launch.launchDate)){
