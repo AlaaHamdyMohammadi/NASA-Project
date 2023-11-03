@@ -9,8 +9,32 @@ describe('Test GET / launches', () => {
     })
 });
 describe('Test Post / launch', () => {
-    test("It should respond with 200 success", () => {
-        
+    const launchData = {
+      mission: "USS Enterprice",
+      rocket: "NCC",
+      target: "Kepler",
+      launchDate: "May 4, 2025",
+    };
+
+    const launchDataWithoutDate = {
+      mission: "USS Enterprice",
+      rocket: "NCC",
+      target: "Kepler",
+    };
+
+    test("It should respond with 201 created", async () => {
+        const res = await request(app)
+          .post("/launches")
+          .send(launchData)
+          .expect(201);
+
+        const reqDate = new Date (launchData.launchDate).valueOf();
+        const resDate = new Date(res.body.launchDate).valueOf();
+        expect(resDate).toBe(reqDate)
+
+        expect(res.body).toMatchObject(
+          launchDataWithoutDate
+        );
     });
     test("It should catch missing required properties", () => {
 
