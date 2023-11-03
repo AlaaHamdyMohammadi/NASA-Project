@@ -22,6 +22,13 @@ describe('Test Post / launch', () => {
       target: "Kepler",
     };
 
+    const launchDataWithInvalidDate = {
+      mission: "USS Enterprice",
+      rocket: "NCC",
+      target: "Kepler",
+      launchDate: "hello",
+    };
+
     test("It should respond with 201 created", async () => {
         const res = await request(app)
           .post("/launches")
@@ -36,10 +43,20 @@ describe('Test Post / launch', () => {
           launchDataWithoutDate
         );
     });
-    test("It should catch missing required properties", () => {
+    test("It should catch missing required properties", async () => {
+         const res = await request(app)
+           .post("/launches")
+           .send(launchDataWithoutDate)
+           .expect(400);
 
+        expect(res.body).toStrictEqual({ status: "Faild launch" });   
     });
-    test("It should catch invalid dates", () => {
+    test("It should catch invalid dates", async () => {
+        const res = await request(app)
+        .post("/launches")
+        .send(launchDataWithInvalidDate)
+        .expect(400);
 
+        expect(res.body).toStrictEqual({ status: "Faild Date" });   
     });
 });
