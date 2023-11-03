@@ -28,7 +28,7 @@ exports.httpPostAddNewLaunch = (req, res) => {
 };
 
 exports.httpAbortLaunch = (req, res) => {
-    const launchId = req.params.id;
+    const launchId = +req.params.id;
 
     if (!existsLaunchWithId(launchId)){
         return res.status(404).json({
@@ -36,5 +36,6 @@ exports.httpAbortLaunch = (req, res) => {
         });
     }
 
-    return res.status(200).json(abortLaunchById(launchId));
+    const aborted = abortLaunchById(launchId);
+    return res.status(200).json(aborted);
 }
