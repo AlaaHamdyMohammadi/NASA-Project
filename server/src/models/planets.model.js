@@ -25,9 +25,11 @@ function loadPlanets() {
           columns: true,
         })
       )
-      .on("data", (data) => {
+      .on("data", async (data) => {
         if (isHabitablePlanet(data)) {
-          habitablePlanets.push(data);
+          //habitablePlanets.push(data);
+          // Replace below create with insert + update = upsert
+          await Planet.create({ keplerName: data.kepler_name });
         }
       })
       .on("error", (err) => {
@@ -46,8 +48,8 @@ function loadPlanets() {
   });
 }
 
-function getAllPlanets(){
-  return habitablePlanets;
+async function getAllPlanets(){
+  return await Planet.find();
 }
 
 module.exports = {
