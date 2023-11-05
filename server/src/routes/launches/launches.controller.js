@@ -9,7 +9,7 @@ exports.httpGetAllLaunches = async (req, res) => {
   return res.status(200).json(await getAllLaunches());
 };
 
-exports.httpPostAddNewLaunch = (req, res) => {
+exports.httpPostAddNewLaunch = async(req, res) => {
   const launch = req.body;
   if (
     !launch.mission ||
@@ -23,7 +23,7 @@ exports.httpPostAddNewLaunch = (req, res) => {
   if (isNaN(launch.launchDate)){
     return res.status(400).json({ status: "Faild Date" });
   } 
-  addNewLaunch(launch);
+  await addNewLaunch(launch);
   return res.status(201).json(launch);
 };
 
