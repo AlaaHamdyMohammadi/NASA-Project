@@ -5,8 +5,8 @@ const {
   abortLaunchById,
 } = require("../../models/launches.model");
 
-exports.httpGetAllLaunches = (req, res) => {
-  return res.status(200).json(getAllLaunches());
+exports.httpGetAllLaunches = async (req, res) => {
+  return res.status(200).json(await getAllLaunches());
 };
 
 exports.httpPostAddNewLaunch = (req, res) => {

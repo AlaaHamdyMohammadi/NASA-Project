@@ -19,8 +19,8 @@ saveLaunch(launch);
 
 // launches.set(launch.flightNumber, launch);
 
-function getAllLaunches(){
-    return Array.from(launches.values());
+async function getAllLaunches(){
+    return await Launch.find({});
 }
 
 async function saveLaunch(launch){
