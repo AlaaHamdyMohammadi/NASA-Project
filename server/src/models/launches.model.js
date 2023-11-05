@@ -3,7 +3,7 @@ const Launch = require('./launches.mongo');
 const launches = new Map();
 
 let latestFlightNumber = 100;
-
+ 
 const launch = {
     flightNumber: 100,
     mission: 'Kepler Exploration X',
@@ -15,10 +15,18 @@ const launch = {
     success: true,
 }
 
-launches.set(launch.flightNumber, launch);
+saveLaunch(launch);
+
+// launches.set(launch.flightNumber, launch);
 
 function getAllLaunches(){
     return Array.from(launches.values());
+}
+
+async function saveLaunch(launch){
+  await Launch.updateOne({
+    flightNumber: launch.flightNumber,
+  }, launch, {upsert: true})
 }
 
 function addNewLaunch(launch){
