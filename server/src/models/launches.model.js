@@ -54,7 +54,7 @@ async function getLatestFlightNumber(){
   if(!latestLaunch){
     return  DefaultFlightNumber = 100;
   } 
-  return latestLaunch.flightNumber
+  return latestLaunch.flightNumber 
 }
 
 async function addNewLaunch(launch) {
