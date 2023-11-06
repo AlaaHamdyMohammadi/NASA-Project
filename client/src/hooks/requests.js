@@ -1,6 +1,6 @@
 //import axios from 'axios'
 
-const API_URL = "http://localhost:5500";
+const API_URL = "http://localhost:5500/v1";
 
 async function httpGetPlanets() {
   // TODO: Once API is ready.
