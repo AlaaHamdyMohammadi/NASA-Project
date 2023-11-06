@@ -1,8 +1,8 @@
 const Launch = require('./launches.mongo');
 const Planet = require('./planets.mongo');
-const launches = new Map();
 
- 
+//const launches = new Map();
+
 const launch = {
     flightNumber: 100,
     mission: 'Kepler Exploration X',
@@ -29,7 +29,7 @@ async function saveLaunch(launch){
   if(!planet){
     throw new Error('No matching planet found')
   }
-  await Launch.updateOne({
+  await Launch.findOneAndUpdate({
     flightNumber: launch.flightNumber,
   }, launch, {upsert: true})
 }
@@ -69,15 +69,18 @@ async function addNewLaunch(launch) {
   await saveLaunch(newLaunch)
 }
 
-function existsLaunchWithId(launchId){
-    return launches.has(launchId);
+async function existsLaunchWithId(launchId){
+    return await Launch.findOne({
+      flightNumber: launchId,
+    });
 }
 
-function abortLaunchById(launchId){
-    const aborted = launches.get(launchId);
-    aborted.upcoming = false;
-    aborted.success = false;
-    return aborted;
+async function abortLaunchById(launchId){
+    const aborted = await Launch.updateOne({
+      flightNumber: launchId,
+    }, {upcoming: false, success: false})
+
+    return aborted.modifiedCount === 1;
 }
 
 module.exports = {
