@@ -4,18 +4,18 @@ const Planet = require("./planets.mongo");
 
 //const launches = new Map();
 
-const launch = {
-  flightNumber: 100, //flight_number
-  mission: "Kepler Exploration X", //name
-  rocket: "Explorer Is1", //rocket.name
-  launchDate: new Date("December 27, 2030"), //date_local
-  target: "Kepler-442 b", //not applicable
-  customers: ["ZTM", "NASA"], //payload.customers
-  upcoming: true, //upcoming
-  success: true, //success
-};
+// const launch = {
+//   flightNumber: 100, //flight_number
+//   mission: "Kepler Exploration X", //name
+//   rocket: "Explorer Is1", //rocket.name
+//   launchDate: new Date("December 27, 2030"), //date_local
+//   target: "Kepler-442 b", //not applicable
+//   customers: ["ZTM", "NASA"], //payload.customers
+//   upcoming: true, //upcoming
+//   success: true, //success
+// };
 
-saveLaunch(launch);
+// saveLaunch(launch);
 
 const APACEX_API_URL = `https://api.spacexdata.com/v4/launches/query`;
 
@@ -94,7 +94,7 @@ async function existsLaunchWithId(launchId) {
 }
 
 async function getAllLaunches(skip, limit) {
-  return await Launch.find({}, { _id: 0, __v: 0 }).skip(skip).limit(limit);
+  return await Launch.find({}, { _id: 0, __v: 0 }).sort({flightNumber: -1}).skip(skip).limit(limit);
 }
 
 async function saveLaunch(launch) {
