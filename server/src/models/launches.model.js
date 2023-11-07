@@ -19,7 +19,7 @@ saveLaunch(launch);
 
 const APACEX_API_URL = `https://api.spacexdata.com/v4/launches/query`;
 
-async function loadLaunchesData() {
+async function populateLaunches() {
   console.log("Downloading Data");
   const res = await axios.post(APACEX_API_URL, {
     query: {},
@@ -41,21 +41,51 @@ async function loadLaunchesData() {
       ],
     },
   });
+  const launchDocs = res.data.docs;
+  for (const launchDoc of launchDocs) {
+    const payloads = launchDoc["payloads"];
+    const customers = payloads.flatMap((payload) => {
+      return payload["customers"];
+    });
+    const launch = {
+      flightNumber: launchDoc["flight_number"],
+      mission: launchDoc["name"],
+      rocket: launchDoc["rocket"]["name"],
+      launchDate: launchDoc["date_local"],
+      upcoming: launchDoc["upcoming"],
+      success: launchDoc["success"],
+      customers,
+    };
+    console.log(`${launch.flightNumber} - ${launch.mission}`)
+    //Populate launches collection
+  }
 }
 
-const launchDocs = res.data.docs;
-for(const launchDoc of launchDocs){
-  const payloads = launchDoc['payloads'];
-  const customers = payloads.flatMap((payload) => { return payload['customers']})
-  const launch = {
-    flightNumber: launchDoc['flight_number'],
-    mission: launchDoc['name'],
-    rocket: launchDoc['rocket']['name'],
-    launchDate: launchDoc['date_local'],
-    upcoming: launchDoc['upcoming'],
-    success: launchDoc['success'],
-    customers,
+
+
+
+async function loadLaunchesData() {
+  const firstLaunch = await findLaunch({
+    flightNumber: 1,
+    rocket: "Falcon 1",
+    mission: "FalconSat",
+  });
+  if (firstLaunch) {
+    console.log("Launch Data already loaded");
+    // return;
+  }else{
+    await populateLaunches();
   }
+}
+
+async function findLaunch(filter) {
+  return await Launch.findOne(filter);
+}
+
+async function existsLaunchWithId(launchId) {
+  return await findLaunch({
+    flightNumber: launchId,
+  });
 }
 
 async function getAllLaunches() {
@@ -109,12 +139,6 @@ async function addNewLaunch(launch) {
   });
 
   await saveLaunch(newLaunch);
-}
-
-async function existsLaunchWithId(launchId) {
-  return await Launch.findOne({
-    flightNumber: launchId,
-  });
 }
 
 async function abortLaunchById(launchId) {
