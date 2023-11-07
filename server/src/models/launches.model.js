@@ -60,7 +60,7 @@ async function populateLaunches() {
       success: launchDoc["success"],
       customers,
     };
-    console.log(`${launch.flightNumber} - ${launch.mission}`)
+    //console.log(`${launch.flightNumber} - ${launch.mission}`)
     //Populate launches collection
     await saveLaunch(launch);
   }
