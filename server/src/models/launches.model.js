@@ -24,6 +24,7 @@ async function loadLaunchesData() {
   const res = await axios.post(APACEX_API_URL, {
     query: {},
     options: {
+      pagination: false,
       populate: [
         {
           path: "rocket",
