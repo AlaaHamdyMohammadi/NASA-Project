@@ -93,8 +93,8 @@ async function existsLaunchWithId(launchId) {
   });
 }
 
-async function getAllLaunches() {
-  return await Launch.find({}, {'_id': 0, '__v': 0}).skip(10).limit(50);
+async function getAllLaunches(skip, limit) {
+  return await Launch.find({}, { _id: 0, __v: 0 }).skip(skip).limit(limit);
 }
 
 async function saveLaunch(launch) {
