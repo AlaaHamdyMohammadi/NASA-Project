@@ -6,12 +6,23 @@ on:
     branches: [ master ]
 jobs:
   build:
+    env:
+      CI: true
+      MONGO_URL: mongodb://localhost/nasa
+    strategy:
+      matrix:
+        mongodb-version: ['4.4']  
     runs-on: windows-latest
     steps: 
-      - uses: actions/checkout@v3
-      - name: Use Node.js version 20
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - name: Use Node.js version 16
+        uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '16'
+      - name: Use MongoDB from Github Actions
+        uses: supercharge/mongodb-github-action@1.10.0    
+        with: 
+          mongodb-version: ${{matrix.mongodb-version}}
       - run: npm install
-      - run: npm run build --prefix client     
+      - run: npm run build --prefix client 
+      - run: npm test    
