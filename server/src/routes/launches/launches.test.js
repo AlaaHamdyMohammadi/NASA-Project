@@ -1,5 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
+// const { mongoConnect, mongoDisconnect} = 
+const {loadPlanetsData} = require('../../models/planets.model');
 
 
 describe('Test GET / launches', () => {
@@ -9,6 +11,9 @@ describe('Test GET / launches', () => {
     })
 });
 describe('Test Post / launch', () => {
+  beforeAll(async() => {
+    await loadPlanetsData();
+  })
     const launchData = {
       mission: "USS Enterprice",
       rocket: "NCC",
